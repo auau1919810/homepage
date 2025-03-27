@@ -1,3 +1,61 @@
-<script async src="https://cse.google.com/cse.js?cx=60e68b23b90bc4720">
-</script>
-<div class="gcse-search"></div>
+<html>
+  <head>
+    <script async src="https://cse.google.com/cse.js?cx=60e68b23b90bc4720"></script>
+    <style>
+      .inbutout { width: 300px; height: 25px; border: 1px solid #999999; padding: 5px; }
+    </style>
+    <script>
+      	<script>
+	function getYouTube(input = false) {
+	let yt = ''; //'dqw4w';
+	let ytlink = '';
+	let ap = '?autoplay=1';
+	if (input) {
+		ytlink = document.forms.link.yt.value;
+		window.scrollTo(0, 0);
+	}
+	if (!ytlink) {
+		let urlParams = new URLSearchParams(window.location.search);
+		yt = urlParams.get('v'); //&v=
+		if (!yt) {
+			ytlink = urlParams.get('yt'); //idk
+			if (ytlink) {	
+				if (ytlink.length == 11) yt = ytlink; //youtube id
+			}
+		}
+	}
+	if (!yt) {
+		if (ytlink) {
+		//case 1 - v=ID以外になんかあるとき
+		let video = ytlink.match(/v=(.+)&/);
+		if (video) yt = video[1];
+			else {
+			//case 2 - v=IDが終わりにあるとき
+			video = ytlink.match(/v=(.+)$/);
+			if (video) yt = video[1];
+				else {
+				//youtu.be/idだったとき
+				video = ytlink.match(/youtu\.be\/(.+)/);
+				if (video) yt = video[1];
+				}
+			}
+		}
+	}
+	if (yt) {
+	//embedタグ
+	document.querySelector("#yt").innerHTML = '<div id="embed" class="embed-container"><iframe src="https://www.youtube-nocookie.com/embed/' + yt + ap + '" width="853" height="480" frameborder="0" webkitallowfullscreen="1" mozallowfullscreen="1" allowfullscreen="1" allow="autoplay"></iframe></div>';
+	}
+}
+	</script>
+    </script>
+  </head>
+  <body>
+    <div class="gcse-search"></div>
+    <form name="link">
+       <input name="yt" class="inbutout" type="text" value="" placeholder="...youtube.com/watch?v=...">
+      	<br>
+	      <a href="javascript:getYouTube(true);" title="load">go</a>
+	      <div id="yt"></div>
+    </form>
+  </body>
+</html>
